@@ -30,7 +30,66 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 
 ## PROGRAM
+```
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+char text[100], key[100], encrypt[100], decrypt[100];
+int i, j = 0, len;
+
+printf("Enter the plaintext: ");
+fgets(text, sizeof(text), stdin);
+
+printf("Enter the keyword: ");
+scanf("%s", key);
+
+len = strlen(text);
+
+for(i = 0; i < len; i++)
+{
+if(text[i] == '\n')
+{
+text[i] = '\0';
+break;
+}
+}
+
+len = strlen(text);
+
+for(i = 0; i < len; i++)
+{
+if(isalpha(text[i]))
+{
+char ch = toupper(text[i]);
+char k = toupper(key[j % strlen(key)]);
+
+encrypt[i] = ((ch - 'A' + k - 'A') % 26) + 'A';
+decrypt[i] = ((encrypt[i] - 'A' - (k - 'A') + 26) % 26) + 'A';
+
+j++;
+}
+else
+{
+encrypt[i] = text[i];
+decrypt[i] = text[i];
+}
+}
+
+encrypt[len] = '\0';
+decrypt[len] = '\0';
+
+printf("\nEncrypted text: %s", encrypt);
+printf("\nDecrypted text: %s\n", decrypt);
+
+return 0;
+}
+```
 
 ## OUTPUT
+<img width="497" height="210" alt="image" src="https://github.com/user-attachments/assets/37a09ef6-a6f2-4107-8daa-62080ea172c8" />
 
 ## RESULT
+Thus, the C program to implement the Vigenère Cipher substitution technique was successfully executed, and the given plaintext was encrypted and decrypted using the keyword.
